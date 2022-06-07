@@ -115,7 +115,11 @@ extension AppViewController: UICollectionViewDataSource {
         
         guard let listCell = collectionView.dequeueReusableCell(withReuseIdentifier: AppListCollectionViewCell.identifier, for: indexPath) as? AppListCollectionViewCell else { return UICollectionViewCell() }
         
-        return singleListCell
+        switch indexPath.section {
+        case 0: return singleListCell
+        case 1: return listCell
+        default: return UICollectionViewCell()
+        }
     }
 }
 
