@@ -15,3 +15,4 @@ final class SearchViewController: UIViewController {
         self.view.backgroundColor = .red
     }
 }
+

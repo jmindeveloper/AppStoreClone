@@ -41,24 +41,36 @@ final class AppSingleListCollectionViewCell: UICollectionViewCell {
     
     private let imageTitleStack: UIStackView = {
         let stack = UIStackView()
+        stack.axis = .vertical
+        stack.alignment = .leading
+        stack.spacing = 4
         
         return stack
     }()
     
     private let categoryLabel: UILabel = {
         let label = UILabel()
+        label.text = "챌린지"
+        label.textColor = averageColor
+        label.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
         
         return label
     }()
     
     private let appTitleLargeLabel: UILabel = {
         let label = UILabel()
+        label.text = "배는 연안부두에서 타자구"
+        label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        label.textColor = averageColor
         
         return label
     }()
     
     private let appDescriptionLargeLabel: UILabel = {
         let label = UILabel()
+        label.text = "좋은배는 파도에 굴복하지 않습니다"
+        label.textColor = averageColor
+        label.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
         
         return label
     }()
@@ -75,6 +87,9 @@ final class AppSingleListCollectionViewCell: UICollectionViewCell {
         baseView.addSubview(appImageView)
         baseView.addSubview(appItemStackView)
         appImageView.addSubview(imageTitleStack)
+        [categoryLabel, appTitleLargeLabel, appDescriptionLargeLabel].forEach {
+            imageTitleStack.addArrangedSubview($0)
+        }
         
         configureConstraints()
     }
@@ -99,6 +114,11 @@ final class AppSingleListCollectionViewCell: UICollectionViewCell {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(appImageView.snp.width).multipliedBy(0.6)
+        }
+        
+        imageTitleStack.snp.makeConstraints {
+            $0.leading.equalTo(appItemStackView)
+            $0.bottom.equalToSuperview().offset(-15)
         }
         
         appItemStackView.snp.makeConstraints {
