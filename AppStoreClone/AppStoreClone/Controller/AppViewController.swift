@@ -16,6 +16,7 @@ final class AppViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(AppSingleListCollectionViewCell.self, forCellWithReuseIdentifier: AppSingleListCollectionViewCell.identifier)
         collectionView.register(AppListCollectionViewCell.self, forCellWithReuseIdentifier: AppListCollectionViewCell.identifier)
+        collectionView.register(AppCollectionViewHeaderCell.self, forCellWithReuseIdentifier: AppCollectionViewHeaderCell.identifier)
         
         return collectionView
     }()
@@ -46,10 +47,10 @@ final class AppViewController: UIViewController {
     // MARK: - CompositionalLayout
     private func singleListLayout() -> NSCollectionLayoutSection {
         // item
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(200))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(300))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         // group
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .absolute(200))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .estimated(300))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 5)
         // let section
@@ -64,9 +65,9 @@ final class AppViewController: UIViewController {
         // item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(80))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = .init(top: 5, leading: 0, bottom: 5, trailing: 0)
+        item.contentInsets = .init(top: 5, leading: 0, bottom: 0, trailing: 0)
         // group
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .absolute(240))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .estimated(240))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 3)
         group.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 5)
         // section
@@ -115,8 +116,10 @@ extension AppViewController: UICollectionViewDataSource {
         
         guard let listCell = collectionView.dequeueReusableCell(withReuseIdentifier: AppListCollectionViewCell.identifier, for: indexPath) as? AppListCollectionViewCell else { return UICollectionViewCell() }
         
+        guard let headerCell = collectionView.dequeueReusableCell(withReuseIdentifier: AppCollectionViewHeaderCell.identifier, for: indexPath) as? AppCollectionViewHeaderCell else { return UICollectionViewCell() }
+        
         switch indexPath.section {
-        case 0: return singleListCell
+        case 0: return headerCell
         case 1: return listCell
         default: return UICollectionViewCell()
         }
@@ -125,6 +128,7 @@ extension AppViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 extension AppViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    }
 }
 

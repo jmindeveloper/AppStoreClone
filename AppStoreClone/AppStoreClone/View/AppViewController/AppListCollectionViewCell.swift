@@ -15,10 +15,10 @@ final class AppListCollectionViewCell: UICollectionViewCell {
     private let appImage: UIImageView = {
         let imageView = UIImageView()
         // 삭제해야함
-        imageView.image = UIImage(systemName: "person.fill")
-        imageView.backgroundColor = .red
-        imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = 20
+        imageView.image = UIImage(named: "1.jpg")
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 15
         
         return imageView
     }()
@@ -38,7 +38,7 @@ final class AppListCollectionViewCell: UICollectionViewCell {
         label.tintColor = .label
         label.numberOfLines = 2
         // 삭제해야함
-        label.text = "앱 이름"
+        label.text = "배타러갈래?"
         
         return label
     }()
@@ -49,7 +49,7 @@ final class AppListCollectionViewCell: UICollectionViewCell {
         label.tintColor = .lightGray
         label.numberOfLines = 1
         // 삭제해야함
-        label.text = "앱 설명"
+        label.text = "돈 많이 벌게 해줄게~~"
         
         return label
     }()
@@ -58,11 +58,16 @@ final class AppListCollectionViewCell: UICollectionViewCell {
         let button = UIButton()
         button.setDownloadButton()
         button.setTitle("받기", for: .normal)
-        button.setTitleColor(UIColor.systemBlue, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         
         return button
     }()
+    
+    private let divider = Divider()
+    
+    // MARK: - Properties
+    private var appImageFrameWidth: CGFloat {
+        appImage.frame.width + 10
+    }
     
     // MARK: - LifeCycle
     override init(frame: CGRect) {
@@ -71,6 +76,7 @@ final class AppListCollectionViewCell: UICollectionViewCell {
         self.contentView.addSubview(appImage)
         self.contentView.addSubview(labelStackView)
         self.contentView.addSubview(downloadButton)
+        self.contentView.addSubview(divider)
         
         labelStackView.addArrangedSubview(appTitleLabel)
         labelStackView.addArrangedSubview(descriptionLabel)
@@ -83,9 +89,9 @@ final class AppListCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         appImage.snp.makeConstraints {
-            $0.leading.top.bottom.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.top.bottom.equalToSuperview().multipliedBy(0.9)
             $0.width.equalTo(appImage.snp.height)
         }
         
@@ -100,6 +106,13 @@ final class AppListCollectionViewCell: UICollectionViewCell {
             $0.leading.equalTo(labelStackView.snp.trailing).offset(-15)
             $0.width.equalTo(65)
             $0.height.equalTo(30)
+        }
+        
+        divider.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.width.equalToSuperview().offset(-70)
+            $0.top.equalToSuperview()
+            $0.trailing.equalToSuperview()
         }
     }
 }
