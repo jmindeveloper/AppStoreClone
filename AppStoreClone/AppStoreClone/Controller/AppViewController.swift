@@ -30,7 +30,6 @@ final class AppViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
@@ -47,7 +46,7 @@ final class AppViewController: UIViewController {
     // MARK: - CompositionalLayout
     private func singleListLayout() -> NSCollectionLayoutSection {
         // item
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(300))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         // group
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .estimated(300))

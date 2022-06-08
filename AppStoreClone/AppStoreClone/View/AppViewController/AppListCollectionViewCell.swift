@@ -81,14 +81,15 @@ final class AppListCollectionViewCell: UICollectionViewCell {
         labelStackView.addArrangedSubview(appTitleLabel)
         labelStackView.addArrangedSubview(descriptionLabel)
         
+        configureConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    // MARK: - Method
+    private func configureConstraints() {
         appImage.snp.makeConstraints {
             $0.leading.equalToSuperview()
             $0.top.bottom.equalToSuperview().multipliedBy(0.9)
