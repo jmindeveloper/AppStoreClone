@@ -21,6 +21,8 @@ final class AppViewController: UIViewController {
         return collectionView
     }()
     
+    // MARK: - Properties
+    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +33,7 @@ final class AppViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         collectionView.snp.makeConstraints {
+//            $0.edges.equalTo(view.safeAreaLayoutGuide)
             $0.edges.equalToSuperview()
         }
     }
@@ -85,6 +88,8 @@ final class AppViewController: UIViewController {
                 return self.singleListLayout()
             case 1:
                 return self.listLayout()
+            case 2:
+                return self.singleListLayout()
             default:
                 return nil
             }
@@ -96,7 +101,7 @@ final class AppViewController: UIViewController {
 extension AppViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -105,6 +110,8 @@ extension AppViewController: UICollectionViewDataSource {
             return 5
         case 1:
             return 20
+        case 2:
+            return 5
         default:
             return 0
         }
@@ -120,6 +127,7 @@ extension AppViewController: UICollectionViewDataSource {
         switch indexPath.section {
         case 0: return headerCell
         case 1: return listCell
+        case 2: return singleListCell
         default: return UICollectionViewCell()
         }
     }

@@ -30,7 +30,8 @@ final class BaseTabBarController: UITabBarController {
         vc3.tabBarItem.image = UIImage(systemName: "magnifyingglass")
         
         tabBar.tintColor = .label
-        tabBar.barTintColor = .lightGray
+//        tabBar.barTintColor = .lightGray
+        tabBar.isTranslucent = true
         setViewControllers([vc1, vc2, vc3], animated: true)
     }
     
