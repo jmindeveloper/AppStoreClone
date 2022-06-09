@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Combine
 
 final class AppViewController: UIViewController {
     
@@ -25,29 +26,39 @@ final class AppViewController: UIViewController {
     
     // MARK: - Properties
     private let appRankingViewModel = AppRankingViewModel()
+    private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemBackground
         configureCollectionView()
-        print("AppView viewDidLoad")
+        configureCombine()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        appRankingViewModel.fetchTopRankings()
         collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
     
     // MARK: - Method
-    func configureCollectionView() {
+    private func configureCollectionView() {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.collectionViewLayout = layout()
         self.view.addSubview(collectionView)
+    }
+    
+    private func configureCombine() {
+
+        appRankingViewModel.fetchTopRankings()
+        Publishers.CombineLatest(appRankingViewModel.$paidRanking, appRankingViewModel.$freeRanking)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.collectionView.reloadData()
+            }.store(in: &subscriptions)
     }
     
     // MARK: - CompositionalLayout
@@ -100,11 +111,11 @@ final class AppViewController: UIViewController {
             case 0:
                 let section = self.singleListLayout()
                 return section
-            case 1:
+            case 1, 2, 4, 5, 7, 9:
                 let section = self.listLayout()
                 section.boundarySupplementaryItems = [sectionHeader]
                 return section
-            case 2:
+            case 3, 6, 8:
                 let section = self.singleListLayout()
                 section.boundarySupplementaryItems = [sectionHeader]
                 return section
@@ -119,7 +130,7 @@ final class AppViewController: UIViewController {
 extension AppViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3
+        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -127,9 +138,11 @@ extension AppViewController: UICollectionViewDataSource {
         case 0:
             return 5
         case 1:
-            return 20
+            return appRankingViewModel.paidRanking?.ranking.count ?? 0
         case 2:
-            return 5
+            return appRankingViewModel.freeRanking?.ranking.count ?? 0
+        case 3, 6, 8: return 5
+        case 4, 5, 7, 9: return 10
         default:
             return 0
         }
@@ -144,8 +157,19 @@ extension AppViewController: UICollectionViewDataSource {
         
         switch indexPath.section {
         case 0: return headerCell
-        case 1: return listCell
-        case 2: return singleListCell
+        case 1:
+            guard let app = appRankingViewModel.paidRanking?.ranking[indexPath.row] else { return listCell }
+            listCell.configure(with: app)
+            return listCell
+        case 2:
+            guard let app = appRankingViewModel.freeRanking?.ranking[indexPath.row] else { return listCell }
+            listCell.configure(with: app)
+            return listCell
+        case 3, 6, 8: return singleListCell
+        case 4, 5, 7, 9:
+            guard let app = appRankingViewModel.freeRanking?.ranking.randomElement() else { return listCell }
+            listCell.configure(with: app)
+            return listCell
         default: return UICollectionViewCell()
         }
     }
@@ -155,7 +179,34 @@ extension AppViewController: UICollectionViewDataSource {
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: AppCollectionViewHeader.identifier, for: indexPath) as? AppCollectionViewHeader else { return UICollectionReusableView() }
             
             switch indexPath.section {
-            case 0: return headerView
+            case 1:
+                headerView.configure("유료 앱 순위", subTitle: nil, buttonHidden: false)
+                return headerView
+            case 2:
+                headerView.configure("무료 앱 순위", subTitle: nil, buttonHidden: false)
+                return headerView
+            case 3:
+                headerView.configure("추천이벤트", subTitle: nil, buttonHidden: true)
+                return headerView
+            case 4:
+                headerView.configure("iPhone 필수 앱", subTitle: "에디터가 엄선한 추천 앱들을 소개합니다", buttonHidden: false)
+                return headerView
+            case 5:
+                headerView.configure("요즘 뜨는 앱", subTitle: "최근 인기 상승이 돋보이는 앱을 확인하세요", buttonHidden: false)
+                return headerView
+            case 6:
+                headerView.configure("놓치지 말아야 할 이벤트", subTitle: nil, buttonHidden: true)
+                return headerView
+            case 7:
+                headerView.configure("크리에이터를 위한 앱", subTitle: nil, buttonHidden: false)
+                return headerView
+            case 8:
+                headerView.configure("하루의 감정을 기록해보세요", subTitle: nil, buttonHidden: true)
+                return headerView
+            case 9:
+                headerView.configure("완벽한 셀카를 위해", subTitle: nil, buttonHidden: false)
+                return headerView
+                
             default: return headerView
             }
         } else {
@@ -167,6 +218,7 @@ extension AppViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension AppViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.reloadData()
     }
 }
 

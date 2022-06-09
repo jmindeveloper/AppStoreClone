@@ -54,6 +54,7 @@ final class APICaller {
     }
     
     func fetchTopRankings() -> AnyPublisher<(AppRankingModel, AppRankingModel), Error> {
+        print("fetch...")
         let fetchPaid = fetchPaidRanking()
         let fetchFree = fetchFreeRanking()
         

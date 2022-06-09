@@ -51,19 +51,19 @@ extension UIImage {
 extension UIImageView {
     
     func loadImage(with urlString: String) {
-//        DispatchQueue.global().async {
-//            guard let url = URL(string: urlString),
-//                  let data = try? Data(contentsOf: url),
-//                  let image = UIImage(data: data) else { return }
-//            DispatchQueue.main.async {
-//                self.image = image
-//            }
-//        }
-        let subscription = APICaller.shared.loadImage(with: urlString)
-            .receive(on: DispatchQueue.main)
-            .sink { image in
+        DispatchQueue.global().async {
+            guard let url = URL(string: urlString),
+                  let data = try? Data(contentsOf: url),
+                  let image = UIImage(data: data) else { return }
+            DispatchQueue.main.async {
                 self.image = image
             }
-        subscription.cancel()
+        }
+//        let subscription = APICaller.shared.loadImage(with: urlString)
+//            .receive(on: DispatchQueue.main)
+//            .sink { image in
+//                self.image = image
+//            }
+//        subscription.cancel()
     }
 }

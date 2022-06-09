@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import SDWebImage
 
 final class AppListCollectionViewCell: UICollectionViewCell {
     static let identifier = "AppListCollectionViewCell"
@@ -117,5 +118,17 @@ final class AppListCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    public func configure(with: )
+    public func configure(with ranking: Ranking) {
+//        appImage.loadImage(with: ranking.appIconUrlString)
+        appImage.sd_setImage(with: URL(string: ranking.appIconUrlString))
+        appTitleLabel.text = ranking.appTitle
+        descriptionLabel.text = ranking.developerName
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        appImage.image = nil
+        appTitleLabel.text = ""
+        descriptionLabel.text = ""
+    }
 }

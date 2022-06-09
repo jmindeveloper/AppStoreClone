@@ -17,7 +17,6 @@ class AppRankingViewModel {
     // MARK: - Method
     func fetchTopRankings() {
         APICaller.shared.fetchTopRankings()
-            .receive(on: DispatchQueue.main)
             .sink { completion in
                 print("fetchTopRankingCompletion: ", completion)
             } receiveValue: { [weak self] (paid: AppRankingModel, free: AppRankingModel) in

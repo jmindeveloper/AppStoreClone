@@ -51,7 +51,7 @@ final class AppSingleListCollectionViewCell: UICollectionViewCell {
     private let categoryLabel: UILabel = {
         let label = UILabel()
         label.text = "챌린지"
-        label.textColor = averageColor
+//        label.textColor = averageColor
         label.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
         
         return label
@@ -61,7 +61,7 @@ final class AppSingleListCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "배는 연안부두에서 타자구"
         label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
-        label.textColor = averageColor
+//        label.textColor = averageColor
         
         return label
     }()

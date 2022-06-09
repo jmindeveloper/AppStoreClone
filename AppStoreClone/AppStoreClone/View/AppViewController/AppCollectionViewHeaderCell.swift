@@ -79,7 +79,7 @@ final class AppCollectionViewHeaderCell: UICollectionViewCell {
     // MARK: - LifeCycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        appItemStackView.isTextAverageColor = true
+//        appItemStackView.isTextAverageColor = true
         [headerStackView, appImageView, divider].forEach {
             contentView.addSubview($0)
         }

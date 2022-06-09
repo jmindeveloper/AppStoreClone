@@ -74,4 +74,20 @@ final class AppCollectionViewHeader: UICollectionReusableView {
             $0.edges.equalToSuperview()
         }
     }
+    
+    func configure(_ title: String, subTitle: String?, buttonHidden: Bool) {
+        headerTitleLabel.text = title
+        if let subTitle = subTitle {
+            headerDescriptionLabel.isHidden = false
+            headerDescriptionLabel.text = subTitle
+        } else {
+            headerDescriptionLabel.isHidden = true
+        }
+        
+        if buttonHidden {
+            seeMoreButton.isHidden = true
+        } else {
+            seeMoreButton.isHidden = false
+        }
+    }
 }
