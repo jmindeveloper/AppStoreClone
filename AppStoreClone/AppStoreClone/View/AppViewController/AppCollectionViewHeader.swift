@@ -75,16 +75,22 @@ final class AppCollectionViewHeader: UICollectionReusableView {
         }
     }
     
-    func configure(_ title: String, subTitle: String?, buttonHidden: Bool) {
-        headerTitleLabel.text = title
-        if let subTitle = subTitle {
+    func configure(with model: SectionHeaderModel) {
+        if let title = model.title {
+            headerTitleLabel.text = title
+            titleAndButtonStackView.isHidden = false
+        } else {
+            titleAndButtonStackView.isHidden = true
+        }
+        
+        if let subTitle = model.subTitle {
             headerDescriptionLabel.isHidden = false
             headerDescriptionLabel.text = subTitle
         } else {
             headerDescriptionLabel.isHidden = true
         }
         
-        if buttonHidden {
+        if model.buttonHidden {
             seeMoreButton.isHidden = true
         } else {
             seeMoreButton.isHidden = false

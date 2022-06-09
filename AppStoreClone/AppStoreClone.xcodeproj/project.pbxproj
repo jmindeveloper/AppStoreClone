@@ -24,6 +24,8 @@
 		0E6FDCB9284F1CF40054E07C /* extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6FDCB8284F1CF40054E07C /* extension.swift */; };
 		0E73D9932851930B009E0B82 /* AppRankingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E73D9922851930B009E0B82 /* AppRankingModel.swift */; };
 		0E73D99628519BCC009E0B82 /* AppRankingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E73D99528519BCC009E0B82 /* AppRankingViewModel.swift */; };
+		0E73D9982851D48E009E0B82 /* SectionHeaderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E73D9972851D48E009E0B82 /* SectionHeaderModel.swift */; };
+		0E73D99A2851DBBA009E0B82 /* AppDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E73D9992851DBBA009E0B82 /* AppDetailViewController.swift */; };
 		9EC8E07A62E7AD7E52AA5685 /* Pods_AppStoreClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 331DE2DE9A7D04E39AA32CC8 /* Pods_AppStoreClone.framework */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +49,8 @@
 		0E6FDCB8284F1CF40054E07C /* extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extension.swift; sourceTree = "<group>"; };
 		0E73D9922851930B009E0B82 /* AppRankingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRankingModel.swift; sourceTree = "<group>"; };
 		0E73D99528519BCC009E0B82 /* AppRankingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRankingViewModel.swift; sourceTree = "<group>"; };
+		0E73D9972851D48E009E0B82 /* SectionHeaderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderModel.swift; sourceTree = "<group>"; };
+		0E73D9992851DBBA009E0B82 /* AppDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDetailViewController.swift; sourceTree = "<group>"; };
 		331DE2DE9A7D04E39AA32CC8 /* Pods_AppStoreClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppStoreClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		423CF316F8DC677A316C24E6 /* Pods-AppStoreClone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppStoreClone.release.xcconfig"; path = "Target Support Files/Pods-AppStoreClone/Pods-AppStoreClone.release.xcconfig"; sourceTree = "<group>"; };
 		B4DD45E57CBEE4D98DF1E267 /* Pods-AppStoreClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppStoreClone.debug.xcconfig"; path = "Target Support Files/Pods-AppStoreClone/Pods-AppStoreClone.debug.xcconfig"; sourceTree = "<group>"; };
@@ -115,6 +119,7 @@
 				0E6FDCA8284F09DB0054E07C /* TodayViewController.swift */,
 				0E6FDCAA284F09E90054E07C /* AppViewController.swift */,
 				0E6FDCAC284F09F70054E07C /* SearchViewController.swift */,
+				0E73D9992851DBBA009E0B82 /* AppDetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -159,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				0E73D9922851930B009E0B82 /* AppRankingModel.swift */,
+				0E73D9972851D48E009E0B82 /* SectionHeaderModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -304,6 +310,7 @@
 			files = (
 				0E73D9932851930B009E0B82 /* AppRankingModel.swift in Sources */,
 				0E6FDCAD284F09F70054E07C /* SearchViewController.swift in Sources */,
+				0E73D9982851D48E009E0B82 /* SectionHeaderModel.swift in Sources */,
 				0E73D99628519BCC009E0B82 /* AppRankingViewModel.swift in Sources */,
 				0E6FDCAB284F09E90054E07C /* AppViewController.swift in Sources */,
 				0E46E89C2850D7F00078CEF9 /* AppItemStackView.swift in Sources */,
@@ -314,6 +321,7 @@
 				0E3A12CC284F074600B561F3 /* AppDelegate.swift in Sources */,
 				0E3A12CE284F074600B561F3 /* SceneDelegate.swift in Sources */,
 				0E6FDCB4284F10FD0054E07C /* AppSingleListCollectionViewCell.swift in Sources */,
+				0E73D99A2851DBBA009E0B82 /* AppDetailViewController.swift in Sources */,
 				0E6FDCA7284F091E0054E07C /* BaseTabBarController.swift in Sources */,
 				0E46E89F2850E7930078CEF9 /* AppCollectionViewHeader.swift in Sources */,
 				0E6FDCB6284F11DD0054E07C /* AppListCollectionViewCell.swift in Sources */,

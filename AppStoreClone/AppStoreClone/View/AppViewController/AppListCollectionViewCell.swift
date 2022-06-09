@@ -105,7 +105,7 @@ final class AppListCollectionViewCell: UICollectionViewCell {
         downloadButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview()
-            $0.leading.equalTo(labelStackView.snp.trailing).offset(-15)
+            $0.leading.equalTo(labelStackView.snp.trailing).offset(15)
             $0.width.equalTo(65)
             $0.height.equalTo(30)
         }
