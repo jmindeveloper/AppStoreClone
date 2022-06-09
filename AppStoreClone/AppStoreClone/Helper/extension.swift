@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 // UIButton
 extension UIButton {
@@ -44,5 +45,25 @@ extension UIImage {
         context.render(outputImage, toBitmap: &bitmap, rowBytes: 4, bounds: CGRect(x: 0, y: 0, width: 1, height: 1), format: .RGBA8, colorSpace: nil)
 
         return UIColor(red: CGFloat(255 - bitmap[0]) / 255, green: CGFloat(255 - bitmap[1]) / 255, blue: CGFloat(255 - bitmap[2]) / 255, alpha: CGFloat(bitmap[3]) / 255)
+    }
+}
+
+extension UIImageView {
+    
+    func loadImage(with urlString: String) {
+//        DispatchQueue.global().async {
+//            guard let url = URL(string: urlString),
+//                  let data = try? Data(contentsOf: url),
+//                  let image = UIImage(data: data) else { return }
+//            DispatchQueue.main.async {
+//                self.image = image
+//            }
+//        }
+        let subscription = APICaller.shared.loadImage(with: urlString)
+            .receive(on: DispatchQueue.main)
+            .sink { image in
+                self.image = image
+            }
+        subscription.cancel()
     }
 }

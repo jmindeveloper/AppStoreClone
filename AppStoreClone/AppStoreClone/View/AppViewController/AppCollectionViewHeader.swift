@@ -12,7 +12,7 @@ final class AppCollectionViewHeader: UICollectionReusableView {
     static let identifier = "AppCollectionViewHeader"
     
     // MARK: - Properties
-    private let titleAndButtonStackView: UIStackView = {
+    let titleAndButtonStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.alignment = .center

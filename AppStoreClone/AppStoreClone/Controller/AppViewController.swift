@@ -18,23 +18,26 @@ final class AppViewController: UIViewController {
         collectionView.register(AppListCollectionViewCell.self, forCellWithReuseIdentifier: AppListCollectionViewCell.identifier)
         collectionView.register(AppCollectionViewHeaderCell.self, forCellWithReuseIdentifier: AppCollectionViewHeaderCell.identifier)
         collectionView.register(AppCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: AppCollectionViewHeader.identifier)
+        collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "baseCell")
         
         return collectionView
     }()
     
     // MARK: - Properties
+    private let appRankingViewModel = AppRankingViewModel()
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemBackground
         configureCollectionView()
+        print("AppView viewDidLoad")
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        appRankingViewModel.fetchTopRankings()
         collectionView.snp.makeConstraints {
-//            $0.edges.equalTo(view.safeAreaLayoutGuide)
             $0.edges.equalToSuperview()
         }
     }
@@ -60,8 +63,6 @@ final class AppViewController: UIViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .init(top: 10, leading: 0, bottom: 30, trailing: 0)
         section.orthogonalScrollingBehavior = .groupPagingCentered
-        let sectionHeader = createSectionHeader()
-        section.boundarySupplementaryItems = [sectionHeader]
         
         return section
     }
@@ -80,14 +81,12 @@ final class AppViewController: UIViewController {
         section.contentInsets = .init(top: 10, leading: 0, bottom: 30, trailing: 0)
         section.orthogonalScrollingBehavior = .groupPagingCentered
         
-        let sectionHeader = createSectionHeader()
-        section.boundarySupplementaryItems = [sectionHeader]
         return section
     }
     
     // sectionHeader
     private func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
-        let size = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .estimated(60))
+        let size = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .estimated(0))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: size, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         
         return sectionHeader
@@ -96,13 +95,19 @@ final class AppViewController: UIViewController {
     func layout() -> UICollectionViewLayout {
         return UICollectionViewCompositionalLayout { [weak self] (section, _) -> NSCollectionLayoutSection? in
             guard let self = self else { return nil }
+            let sectionHeader = self.createSectionHeader()
             switch section {
             case 0:
-                return self.singleListLayout()
+                let section = self.singleListLayout()
+                return section
             case 1:
-                return self.listLayout()
+                let section = self.listLayout()
+                section.boundarySupplementaryItems = [sectionHeader]
+                return section
             case 2:
-                return self.singleListLayout()
+                let section = self.singleListLayout()
+                section.boundarySupplementaryItems = [sectionHeader]
+                return section
             default:
                 return nil
             }
@@ -148,7 +153,11 @@ extension AppViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader {
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: AppCollectionViewHeader.identifier, for: indexPath) as? AppCollectionViewHeader else { return UICollectionReusableView() }
-            return headerView
+            
+            switch indexPath.section {
+            case 0: return headerView
+            default: return headerView
+            }
         } else {
             return UICollectionReusableView()
         }

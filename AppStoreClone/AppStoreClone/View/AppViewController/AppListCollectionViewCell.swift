@@ -116,4 +116,6 @@ final class AppListCollectionViewCell: UICollectionViewCell {
             $0.trailing.equalToSuperview()
         }
     }
+    
+    public func configure(with: )
 }
