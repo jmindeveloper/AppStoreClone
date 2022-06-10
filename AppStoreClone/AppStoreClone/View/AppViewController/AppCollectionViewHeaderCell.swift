@@ -17,7 +17,7 @@ final class AppCollectionViewHeaderCell: UICollectionViewCell {
     private let appImageView: UIImageView = {
         let imageView = UIImageView()
         // 삭제해야함
-        imageView.image = UIImage(named: "1.jpg")
+        imageView.image = UIImage(named: "3.jpg")
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 10
