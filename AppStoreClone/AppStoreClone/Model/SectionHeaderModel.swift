@@ -8,7 +8,7 @@
 import Foundation
 
 struct SectionHeaderModel {
-    let title: String?
+    let title: String? 
     let subTitle: String?
     let buttonHidden: Bool
 }

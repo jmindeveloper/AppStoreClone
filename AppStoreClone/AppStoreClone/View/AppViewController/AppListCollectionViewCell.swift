@@ -119,8 +119,8 @@ final class AppListCollectionViewCell: UICollectionViewCell {
     }
     
     public func configure(with ranking: Ranking) {
-//        appImage.loadImage(with: ranking.appIconUrlString)
-        appImage.sd_setImage(with: URL(string: ranking.appIconUrlString))
+//      x  appImage.loadImage(with: ranking.appIconUrlString)
+        self.appImage.sd_setImage(with: URL(string: ranking.appIconUrlString))
         appTitleLabel.text = ranking.appTitle
         descriptionLabel.text = ranking.developerName
     }

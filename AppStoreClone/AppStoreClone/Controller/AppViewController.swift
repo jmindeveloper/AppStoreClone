@@ -39,6 +39,11 @@ final class AppViewController: UIViewController {
         
         collectionView.isHidden = true
         indicator.startAnimating()
+        
+        let view = UIView()
+        view.backgroundColor = .black
+        navigationItem.titleView = view
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -79,7 +84,7 @@ final class AppViewController: UIViewController {
     // MARK: - CompositionalLayout
     private func singleListLayout() -> NSCollectionLayoutSection {
         // item
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(300))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         // group
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .estimated(300))
@@ -112,7 +117,7 @@ final class AppViewController: UIViewController {
     
     // sectionHeader
     private func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
-        let size = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .estimated(0))
+        let size = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .estimated(30))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: size, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         
         return sectionHeader
@@ -182,8 +187,9 @@ extension AppViewController: UICollectionViewDataSource {
             return listCell
         case 3, 6, 8: return singleListCell
         case 4, 5, 7, 9:
-            guard let app = appRankingViewModel.freeRanking?.ranking.randomElement() else { return listCell }
-            listCell.configure(with: app)
+            guard var appList = appRankingViewModel.freeRanking?.ranking else { return listCell }
+            appList.shuffle()
+            listCell.configure(with: appList[indexPath.row])
             return listCell
         default: return UICollectionViewCell()
         }

@@ -8,14 +8,7 @@
 
 
 import UIKit
-import SnapKit
-
-var averageColor: UIColor {
-//  Todo: 네트워크로 이미지 받으면 계산속성으로 모델에 평균속성 넣기
-    let image = UIImage(named: "1.jpg")
-    return image?.getAverageColour ?? UIColor.white
-}
-    
+import SnapKit      
 
 final class AppCollectionViewHeaderCell: UICollectionViewCell {
     static let identifier = "AppCollectionViewHeaderCell"
@@ -88,6 +81,10 @@ final class AppCollectionViewHeaderCell: UICollectionViewCell {
             headerStackView.addArrangedSubview($0)
         }
         configureConstraints()
+        
+        appImageView.image?.getAverageColor(completion: { [weak self] color in
+            self?.appItemStackView.changeLabelColorToAverageColor(color)
+        })
     }
     
     required init?(coder: NSCoder) {
@@ -110,7 +107,7 @@ final class AppCollectionViewHeaderCell: UICollectionViewCell {
             $0.top.equalTo(headerStackView.snp.bottom).offset(5)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(appImageView.snp.width).multipliedBy(0.6)
-            $0.bottom.equalToSuperview().offset(5)
+            $0.bottom.equalToSuperview().offset(-5)
         }
         
         appItemStackView.snp.makeConstraints {

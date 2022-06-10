@@ -10,12 +10,12 @@ import SnapKit
 
 final class AppItemStackView: UIView {
     
-    var isTextAverageColor = false {
-        willSet {
-            appItemTitleLabel.textColor = newValue ? averageColor : .label
-            appItemDescriptionLabel.textColor = newValue ? averageColor : .label
-        }
-    }
+//    var isTextAverageColor = false {
+//        willSet {
+//            appItemTitleLabel.textColor = newValue ? averageColor : .label
+//            appItemDescriptionLabel.textColor = newValue ? averageColor : .label
+//        }
+//    }
     
     // MARK: - View
     let appItemStackView: UIStackView = {
@@ -49,6 +49,7 @@ final class AppItemStackView: UIView {
         let label = UILabel()
         label.text = "배타러갈래?"
         label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        label.textColor = .label
         
         return label
     }()
@@ -57,6 +58,7 @@ final class AppItemStackView: UIView {
         let label = UILabel()
         label.text = "돈 많이 벌게 해줄게~~"
         label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        label.textColor = .label
         
         return label
     }()
@@ -87,6 +89,8 @@ final class AppItemStackView: UIView {
         appItemTitleAndDescriptionStaciView.addArrangedSubview(appItemTitleLabel)
         appItemTitleAndDescriptionStaciView.addArrangedSubview(appItemDescriptionLabel)
         self.addSubview(appItemStackView)
+        
+        
     }
     
     private func configureCostraints() {
@@ -102,5 +106,10 @@ final class AppItemStackView: UIView {
             $0.width.equalTo(65)
             $0.height.equalTo(30)
         }
+    }
+    
+    func changeLabelColorToAverageColor(_ color: UIColor) {
+        appItemTitleLabel.textColor = color
+        appItemDescriptionLabel.textColor = color
     }
 }
