@@ -12,6 +12,8 @@ final class AppCollectionViewHeader: UICollectionReusableView {
     static let identifier = "AppCollectionViewHeader"
     
     // MARK: - Properties
+    private let divider = Divider()
+    
     let titleAndButtonStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -57,6 +59,7 @@ final class AppCollectionViewHeader: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(titleAndButtonStackView)
+        addSubview(divider)
         titleAndButtonStackView.addArrangedSubview(labelStackView)
         titleAndButtonStackView.addArrangedSubview(seeMoreButton)
         labelStackView.addArrangedSubview(headerTitleLabel)
@@ -70,8 +73,14 @@ final class AppCollectionViewHeader: UICollectionReusableView {
     }
     
     private func configureConstraints() {
+        divider.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(1)
+        }
+        
         titleAndButtonStackView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.top.top.equalTo(divider.snp.bottom).offset(5)
         }
     }
     

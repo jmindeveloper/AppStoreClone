@@ -40,9 +40,8 @@ final class AppViewController: UIViewController {
         collectionView.isHidden = true
         indicator.startAnimating()
         
-        let view = UIView()
-        view.backgroundColor = .black
-        navigationItem.titleView = view
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "앱"
         
     }
     
@@ -92,7 +91,7 @@ final class AppViewController: UIViewController {
         group.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 5)
         // let section
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(top: 10, leading: 0, bottom: 30, trailing: 0)
+        section.contentInsets = .init(top: 10, leading: 0, bottom: 10, trailing: 0)
         section.orthogonalScrollingBehavior = .groupPagingCentered
         
         return section
@@ -179,17 +178,17 @@ extension AppViewController: UICollectionViewDataSource {
         case 0: return headerCell
         case 1:
             guard let app = appRankingViewModel.paidRanking?.ranking[indexPath.row] else { return listCell }
-            listCell.configure(with: app)
+            listCell.configure(with: app, indexPath.row)
             return listCell
         case 2:
             guard let app = appRankingViewModel.freeRanking?.ranking[indexPath.row] else { return listCell }
-            listCell.configure(with: app)
+            listCell.configure(with: app, indexPath.row)
             return listCell
         case 3, 6, 8: return singleListCell
         case 4, 5, 7, 9:
             guard var appList = appRankingViewModel.freeRanking?.ranking else { return listCell }
             appList.shuffle()
-            listCell.configure(with: appList[indexPath.row])
+            listCell.configure(with: appList[indexPath.row], indexPath.row)
             return listCell
         default: return UICollectionViewCell()
         }

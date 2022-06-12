@@ -118,8 +118,14 @@ final class AppListCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    public func configure(with ranking: Ranking) {
+    public func configure(with ranking: Ranking, _ index: Int) {
 //      x  appImage.loadImage(with: ranking.appIconUrlString)
+        if (index + 1) % 3 == 1 {
+            divider.isHidden = true
+        } else {
+            divider.isHidden = false
+        }
+        
         self.appImage.sd_setImage(with: URL(string: ranking.appIconUrlString))
         appTitleLabel.text = ranking.appTitle
         descriptionLabel.text = ranking.developerName

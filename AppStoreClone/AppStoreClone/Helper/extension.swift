@@ -58,7 +58,6 @@ extension UIImage {
             let context = CIContext(options: [.workingColorSpace: kCFNull as Any])
             context.render(outputImage, toBitmap: &bitmap, rowBytes: 4, bounds: CGRect(x: 0, y: 0, width: 1, height: 1), format: .RGBA8, colorSpace: nil)
             DispatchQueue.main.async {
-                print("done")
                 completion(UIColor(red: CGFloat(255 - bitmap[0]) / 255, green: CGFloat(255 - bitmap[1]) / 255, blue: CGFloat(255 - bitmap[2]) / 255, alpha: CGFloat(bitmap[3]) / 255))
             }
         }
