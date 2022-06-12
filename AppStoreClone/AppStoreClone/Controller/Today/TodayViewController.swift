@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import Combine
 
 final class TodayViewController: UIViewController {
     
-    // MARK: - Properties
+    // MARK: - View
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -17,6 +18,15 @@ final class TodayViewController: UIViewController {
         
         return collectionView
     }()
+    
+    var blurEffectView: UIVisualEffectView = {
+        let blur = UIBlurEffect(style: .light)
+        let blurView = UIVisualEffectView(effect: blur)
+        
+        return blurView
+    }()
+    
+    private let customTransition = TodayViewControllerTransitionAnimator()
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -27,6 +37,8 @@ final class TodayViewController: UIViewController {
         collectionView.delegate = self
         collectionView.collectionViewLayout = layout()
         view.addSubview(collectionView)
+        view.addSubview(blurEffectView)
+        blurEffectView.isHidden = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -34,13 +46,19 @@ final class TodayViewController: UIViewController {
         collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        
+        blurEffectView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
+    
+    // MARK: - Properties
+    private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - CompositionalLayout
     private func createCardCellLayout() -> NSCollectionLayoutSection {
         let screenWidth = UIScreen.main.bounds.width
         let margine = screenWidth * 0.1 / 2
-        
         
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -61,6 +79,16 @@ final class TodayViewController: UIViewController {
             return self.createCardCellLayout()
         }
     }
+    
+    // MARK: - Method
+    private func getSelectedCellFrame() -> CGRect {
+        guard let selectedIndex = collectionView.indexPathsForSelectedItems?.first,
+              let selectedCell = collectionView.cellForItem(at: selectedIndex) else {
+            return .zero
+        }
+        let selectedCellFrame = selectedCell.convert(selectedCell.bounds, to: nil)
+        return selectedCellFrame
+    }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -77,5 +105,28 @@ extension TodayViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 extension TodayViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let detailVC = TodayCardDetailViewController()
+        detailVC.modalPresentationStyle = .overFullScreen
+        detailVC.transitioningDelegate = self
+        self.present(detailVC, animated: true)
+        
+    }
+}
+
+extension TodayViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        customTransition.originFrame = getSelectedCellFrame()
+        customTransition.presenting = .present
+        
+        return customTransition
+    }
     
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        customTransition.presenting = .dismiss
+        return customTransition
+    }
 }

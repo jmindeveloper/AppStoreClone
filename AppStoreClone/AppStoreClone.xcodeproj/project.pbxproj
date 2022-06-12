@@ -27,6 +27,8 @@
 		0E73D9982851D48E009E0B82 /* SectionHeaderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E73D9972851D48E009E0B82 /* SectionHeaderModel.swift */; };
 		0E73D99A2851DBBA009E0B82 /* AppDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E73D9992851DBBA009E0B82 /* AppDetailViewController.swift */; };
 		0E90B0D32855BC9C00B5FB08 /* TodayCareViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E90B0D22855BC9C00B5FB08 /* TodayCareViewCell.swift */; };
+		0E90B0D62855C55400B5FB08 /* TodayCardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E90B0D52855C55400B5FB08 /* TodayCardDetailViewController.swift */; };
+		0E90B0D82855CEAD00B5FB08 /* TodayViewControllerTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E90B0D72855CEAD00B5FB08 /* TodayViewControllerTransitionAnimator.swift */; };
 		9EC8E07A62E7AD7E52AA5685 /* Pods_AppStoreClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 331DE2DE9A7D04E39AA32CC8 /* Pods_AppStoreClone.framework */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +55,8 @@
 		0E73D9972851D48E009E0B82 /* SectionHeaderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderModel.swift; sourceTree = "<group>"; };
 		0E73D9992851DBBA009E0B82 /* AppDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDetailViewController.swift; sourceTree = "<group>"; };
 		0E90B0D22855BC9C00B5FB08 /* TodayCareViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayCareViewCell.swift; sourceTree = "<group>"; };
+		0E90B0D52855C55400B5FB08 /* TodayCardDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayCardDetailViewController.swift; sourceTree = "<group>"; };
+		0E90B0D72855CEAD00B5FB08 /* TodayViewControllerTransitionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewControllerTransitionAnimator.swift; sourceTree = "<group>"; };
 		331DE2DE9A7D04E39AA32CC8 /* Pods_AppStoreClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppStoreClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		423CF316F8DC677A316C24E6 /* Pods-AppStoreClone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppStoreClone.release.xcconfig"; path = "Target Support Files/Pods-AppStoreClone/Pods-AppStoreClone.release.xcconfig"; sourceTree = "<group>"; };
 		B4DD45E57CBEE4D98DF1E267 /* Pods-AppStoreClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppStoreClone.debug.xcconfig"; path = "Target Support Files/Pods-AppStoreClone/Pods-AppStoreClone.debug.xcconfig"; sourceTree = "<group>"; };
@@ -192,6 +196,8 @@
 			isa = PBXGroup;
 			children = (
 				0E6FDCA8284F09DB0054E07C /* TodayViewController.swift */,
+				0E90B0D52855C55400B5FB08 /* TodayCardDetailViewController.swift */,
+				0E90B0D72855CEAD00B5FB08 /* TodayViewControllerTransitionAnimator.swift */,
 			);
 			path = Today;
 			sourceTree = "<group>";
@@ -339,6 +345,8 @@
 				0E5FCC68285039AA00A124FB /* AppCollectionViewHeaderCell.swift in Sources */,
 				0E6FDCB0284F0CCA0054E07C /* APICaller.swift in Sources */,
 				0E3A12CC284F074600B561F3 /* AppDelegate.swift in Sources */,
+				0E90B0D82855CEAD00B5FB08 /* TodayViewControllerTransitionAnimator.swift in Sources */,
+				0E90B0D62855C55400B5FB08 /* TodayCardDetailViewController.swift in Sources */,
 				0E3A12CE284F074600B561F3 /* SceneDelegate.swift in Sources */,
 				0E6FDCB4284F10FD0054E07C /* AppSingleListCollectionViewCell.swift in Sources */,
 				0E73D99A2851DBBA009E0B82 /* AppDetailViewController.swift in Sources */,
