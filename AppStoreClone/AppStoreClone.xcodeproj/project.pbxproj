@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E384AC32856EF2000F0E477 /* Pods_AppStoreClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E384AC22856EF2000F0E477 /* Pods_AppStoreClone.framework */; };
 		0E3A12CC284F074600B561F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3A12CB284F074600B561F3 /* AppDelegate.swift */; };
 		0E3A12CE284F074600B561F3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3A12CD284F074600B561F3 /* SceneDelegate.swift */; };
 		0E3A12D5284F074700B561F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E3A12D4284F074700B561F3 /* Assets.xcassets */; };
@@ -29,10 +30,10 @@
 		0E90B0D32855BC9C00B5FB08 /* TodayCareViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E90B0D22855BC9C00B5FB08 /* TodayCareViewCell.swift */; };
 		0E90B0D62855C55400B5FB08 /* TodayCardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E90B0D52855C55400B5FB08 /* TodayCardDetailViewController.swift */; };
 		0E90B0D82855CEAD00B5FB08 /* TodayViewControllerTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E90B0D72855CEAD00B5FB08 /* TodayViewControllerTransitionAnimator.swift */; };
-		9EC8E07A62E7AD7E52AA5685 /* Pods_AppStoreClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 331DE2DE9A7D04E39AA32CC8 /* Pods_AppStoreClone.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E384AC22856EF2000F0E477 /* Pods_AppStoreClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_AppStoreClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E3A12C8284F074600B561F3 /* AppStoreClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppStoreClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E3A12CB284F074600B561F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0E3A12CD284F074600B561F3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -67,7 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9EC8E07A62E7AD7E52AA5685 /* Pods_AppStoreClone.framework in Frameworks */,
+				0E384AC32856EF2000F0E477 /* Pods_AppStoreClone.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +215,7 @@
 		62A52D002CDBEC09A0967C4E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0E384AC22856EF2000F0E477 /* Pods_AppStoreClone.framework */,
 				331DE2DE9A7D04E39AA32CC8 /* Pods_AppStoreClone.framework */,
 			);
 			name = Frameworks;

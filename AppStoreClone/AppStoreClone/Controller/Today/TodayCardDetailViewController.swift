@@ -11,7 +11,7 @@ import Combine
 final class TodayCardDetailViewController: UIViewController {
     
     // MARK: - View
-    private let dismissButton: UIButton = {
+    let dismissButton: UIButton = {
         let button = UIButton()
         let xmark = UIImage(systemName: "xmark")
         xmark?.withRenderingMode(.alwaysTemplate)

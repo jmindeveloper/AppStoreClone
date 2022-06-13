@@ -18,6 +18,7 @@ final class BaseTabBarController: UITabBarController {
     
     // MARK: - Method
     private func configureTabBar() {
+//        let vc1 = UINavigationController(rootViewController: TodayViewController())
         let vc1 = TodayViewController()
         let vc2 = UINavigationController(rootViewController: AppViewController())
         let vc3 = UINavigationController(rootViewController: SearchViewController())

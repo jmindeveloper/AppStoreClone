@@ -28,17 +28,24 @@ final class TodayViewController: UIViewController {
     
     private let customTransition = TodayViewControllerTransitionAnimator()
     
+    // MARK: - Properties
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemBackground
-        
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.collectionViewLayout = layout()
         view.addSubview(collectionView)
         view.addSubview(blurEffectView)
         blurEffectView.isHidden = true
+        
+        configureStatusBar()
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -63,7 +70,7 @@ final class TodayViewController: UIViewController {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1.4))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1.2))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.contentInsets = .init(top: 0, leading: 0, bottom: 30, trailing: 0)
         
@@ -89,6 +96,39 @@ final class TodayViewController: UIViewController {
         let selectedCellFrame = selectedCell.convert(selectedCell.bounds, to: nil)
         return selectedCellFrame
     }
+    
+    private func configureStatusBar() {
+        var statusBarManager: UIStatusBarManager?
+        
+        if #available(iOS 15.0, *) {
+            let window = UIApplication.shared.connectedScenes
+                .map { $0 as? UIWindowScene }
+                .compactMap { $0 }
+                .first?.windows.first
+            statusBarManager = window?.windowScene?.statusBarManager
+        } else {
+            let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+            statusBarManager = window?.windowScene?.statusBarManager
+        }
+        
+        let statusBarHeight = statusBarManager?.statusBarFrame.height
+        
+        let statusBarView = UIView(frame: statusBarManager?.statusBarFrame ?? CGRect.zero)
+        
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        self.view.addSubview(statusBarView)
+        statusBarView.addSubview(blurEffectView)
+        
+        statusBarView.snp.makeConstraints {
+            $0.leading.trailing.top.equalToSuperview()
+            $0.height.equalTo(statusBarHeight ?? 47)
+        }
+        
+        blurEffectView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -99,6 +139,7 @@ extension TodayViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TodayCareViewCell.identifier, for: indexPath) as? TodayCareViewCell else { return UICollectionViewCell() }
+        
         return cell
     }
 }

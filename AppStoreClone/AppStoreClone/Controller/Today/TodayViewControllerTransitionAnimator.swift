@@ -8,11 +8,10 @@
 import UIKit
 
 final class TodayViewControllerTransitionAnimator: NSObject {
-    let duration: Double = 0.4
+    let duration: Double = 0.8
     var presenting: PresentMode = .present
     var originFrame = CGRect.zero
     var dismissCompletion: (() -> Void)?
-    
     
     enum PresentMode {
         case present
@@ -41,7 +40,7 @@ extension TodayViewControllerTransitionAnimator: UIViewControllerAnimatedTransit
             transitionContext.completeTransition(false)
             return
         }
-        print(originFrame)
+        
         
         let initialFrame = originFrame
         let finalFrame = cardView.frame
@@ -54,15 +53,17 @@ extension TodayViewControllerTransitionAnimator: UIViewControllerAnimatedTransit
         cardView.transform = scaleTransForm
         cardView.center = CGPoint(x: initialFrame.midX, y: initialFrame.midY)
         cardView.clipsToBounds = true
+        cardView.layer.cornerRadius = 30
         
         containerView.addSubview(cardView)
         
-        UIView.animate(withDuration: duration,
+        UIView.animate(withDuration: duration - 0.2,
                        delay: 0,
                        usingSpringWithDamping: 0.8,
-                       initialSpringVelocity: 0.1) {
+                       initialSpringVelocity: 0) {
             cardView.transform = CGAffineTransform.identity
             cardView.center = CGPoint(x: finalFrame.midX, y: finalFrame.midY)
+            cardView.layer.cornerRadius = 0
             tabBarController.tabBar.frame.origin.y = UIScreen.main.bounds.height
         } completion: { _ in
             transitionContext.completeTransition(true)
@@ -72,12 +73,15 @@ extension TodayViewControllerTransitionAnimator: UIViewControllerAnimatedTransit
     }
     
     func dismissAnimation(using transitionContext: UIViewControllerContextTransitioning) {
-        let containerView = transitionContext.containerView
         guard let cardView = transitionContext.view(forKey: .from),
-              let tabBarController = transitionContext.viewController(forKey: .to) as? UITabBarController else {
+              let tabBarController = transitionContext.viewController(forKey: .to) as? UITabBarController,
+              let cardVC = transitionContext.viewController(forKey: .from) as? TodayCardDetailViewController
+        else {
             transitionContext.completeTransition(false)
             return
         }
+        
+        cardView.layer.cornerRadius = 0
         
         let initialFrame = cardView.frame
         let finalFrame = originFrame
@@ -85,20 +89,21 @@ extension TodayViewControllerTransitionAnimator: UIViewControllerAnimatedTransit
         let xScaleFactor = finalFrame.width / initialFrame.width
         let yScaleFactor = finalFrame.height / initialFrame.height
         
-        containerView.addSubview(cardView)
-        containerView.addSubview(tabBarController.tabBar)
-        
         UIView.animate(withDuration: duration,
                        delay: 0,
-                       usingSpringWithDamping: 0.8,
-                       initialSpringVelocity: 0.1) {
-            containerView.bringSubviewToFront(tabBarController.tabBar)
+                       usingSpringWithDamping: 0.5,
+                       initialSpringVelocity: 0) {
             cardView.transform = CGAffineTransform(scaleX: xScaleFactor, y: yScaleFactor)
             cardView.center = CGPoint(x: finalFrame.midX, y: finalFrame.midY)
-            tabBarController.tabBar.frame.origin.y = UIScreen.main.bounds.height - tabBarController.tabBar.frame.height
+            cardView.layer.cornerRadius = 30
+            cardVC.dismissButton.isHidden = true
         } completion: { _ in
             transitionContext.completeTransition(true)
-            tabBarController.tabBar.addSubview(tabBarController.tabBar)
         }
+        
+        UIView.animate(withDuration: duration - 0.4) {
+            tabBarController.tabBar.frame.origin.y = UIScreen.main.bounds.height - tabBarController.tabBar.frame.height
+        } completion: { _ in }
+
     }
 }
