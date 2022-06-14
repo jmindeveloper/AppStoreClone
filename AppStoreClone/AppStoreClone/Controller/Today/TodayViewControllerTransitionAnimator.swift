@@ -11,6 +11,7 @@ final class TodayViewControllerTransitionAnimator: NSObject {
     let duration: Double = 0.8
     var presenting: PresentMode = .present
     var originFrame = CGRect.zero
+    var cardCellItemFrame = CGRect.zero
     var dismissCompletion: (() -> Void)?
     
     enum PresentMode {
@@ -36,11 +37,12 @@ extension TodayViewControllerTransitionAnimator: UIViewControllerAnimatedTransit
     func presentAnimation(using transitionContext: UIViewControllerContextTransitioning) {
         let containerView = transitionContext.containerView
         guard let cardView = transitionContext.view(forKey: .to),
-              let tabBarController = transitionContext.viewController(forKey: .from) as? UITabBarController else {
+              let tabBarController = transitionContext.viewController(forKey: .from) as? UITabBarController,
+              let cardViewController = transitionContext.viewController(forKey: .to) as? TodayCardDetailViewController
+        else {
             transitionContext.completeTransition(false)
             return
         }
-        
         
         let initialFrame = originFrame
         let finalFrame = cardView.frame
@@ -48,12 +50,24 @@ extension TodayViewControllerTransitionAnimator: UIViewControllerAnimatedTransit
         let xScaleFactor = initialFrame.width / finalFrame.width
         let yScaleFactor = initialFrame.height / finalFrame.height
         
+        // cardView
         let scaleTransForm = CGAffineTransform(scaleX: xScaleFactor, y: yScaleFactor)
-        
         cardView.transform = scaleTransForm
         cardView.center = CGPoint(x: initialFrame.midX, y: initialFrame.midY)
         cardView.clipsToBounds = true
         cardView.layer.cornerRadius = 30
+        
+        // cardImageView
+        let defaultCardImageViewFrame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 1.1)
+        cardViewController.cardImageView.frame = initialFrame
+        cardViewController.cardImageView.center = CGPoint(x: initialFrame.midX, y: initialFrame.midY)
+        
+        // cardItemStackView
+//        let defaultCardItemViewFrame = CGRect(x:0 , y: defaultCardImageViewFrame.height - 70, width: screenFrame.width, height: 70)
+//        cardViewController.appItemBaseView.frame = cardCellItemFrame
+//        cardViewController.appItemBaseView.center = CGPoint(x: cardCellItemFrame.midX, y: cardCellItemFrame.midY)
+        
+        
         
         containerView.addSubview(cardView)
         
@@ -61,10 +75,21 @@ extension TodayViewControllerTransitionAnimator: UIViewControllerAnimatedTransit
                        delay: 0,
                        usingSpringWithDamping: 0.8,
                        initialSpringVelocity: 0) {
+            // cardView
             cardView.transform = CGAffineTransform.identity
             cardView.center = CGPoint(x: finalFrame.midX, y: finalFrame.midY)
             cardView.layer.cornerRadius = 0
+            
+            // tabbar
             tabBarController.tabBar.frame.origin.y = UIScreen.main.bounds.height
+            
+            // cardImageView
+            cardViewController.cardImageView.frame = defaultCardImageViewFrame
+            cardViewController.cardImageView.center = CGPoint(x: defaultCardImageViewFrame.midX, y: defaultCardImageViewFrame.midY)
+            
+            // cardItemStackView
+//            cardViewController.appItemBaseView.frame = defaultCardItemViewFrame
+//            cardViewController.appItemBaseView.center = CGPoint(x: defaultCardItemViewFrame.midX, y: defaultCardItemViewFrame.midY)
         } completion: { _ in
             transitionContext.completeTransition(true)
         }

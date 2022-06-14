@@ -12,7 +12,7 @@ final class TodayCareViewCell: UICollectionViewCell {
     static let identifier = "TodayCareViewCell"
     
     // MARK: - Properties
-    private let cardImageView: UIImageView = {
+    let cardImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
@@ -29,7 +29,7 @@ final class TodayCareViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let appItemBaseView: UIView = {
+    let appItemBaseView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemGray4
         

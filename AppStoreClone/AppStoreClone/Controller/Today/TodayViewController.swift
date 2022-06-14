@@ -88,6 +88,7 @@ final class TodayViewController: UIViewController {
     }
     
     // MARK: - Method
+    /// 선택한 셀의 프레임
     private func getSelectedCellFrame() -> CGRect {
         guard let selectedIndex = collectionView.indexPathsForSelectedItems?.first,
               let selectedCell = collectionView.cellForItem(at: selectedIndex) else {
@@ -95,6 +96,17 @@ final class TodayViewController: UIViewController {
         }
         let selectedCellFrame = selectedCell.convert(selectedCell.bounds, to: nil)
         return selectedCellFrame
+    }
+    
+    /// 선택한 셀의 이미지 프레임
+    private func getCardCellImageFrame() -> CGRect {
+        guard let selectedIndex = collectionView.indexPathsForSelectedItems?.first,
+              let selectedCell = collectionView.cellForItem(at: selectedIndex) as? TodayCareViewCell else {
+            return .zero
+        }
+        let item = selectedCell.appItemBaseView
+        let itemFrame = item.convert(item.frame, to: nil)
+        return itemFrame
     }
     
     private func configureStatusBar() {
@@ -160,6 +172,7 @@ extension TodayViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
         customTransition.originFrame = getSelectedCellFrame()
+        customTransition.cardCellItemFrame = getCardCellImageFrame()
         customTransition.presenting = .present
         
         return customTransition
