@@ -8,14 +8,14 @@
 import UIKit
 import SnapKit
 
+enum AppItemSize {
+    case small
+    case large
+}
+
 final class AppItemStackView: UIView {
     
-//    var isTextAverageColor = false {
-//        willSet {
-//            appItemTitleLabel.textColor = newValue ? averageColor : .label
-//            appItemDescriptionLabel.textColor = newValue ? averageColor : .label
-//        }
-//    }
+    private let appItemSize: AppItemSize
     
     // MARK: - View
     let appItemStackView: UIStackView = {
@@ -27,20 +27,21 @@ final class AppItemStackView: UIView {
         return stack
     }()
     
-    let appIconImageView: UIImageView = {
+    lazy var appIconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "1.jpg")
-        imageView.layer.cornerRadius = 5
+        imageView.layer.cornerRadius = appItemSize == .small ? 5 : 10
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
         
         return imageView
     }()
     
-    let appItemTitleAndDescriptionStaciView: UIStackView = {
+    lazy var appItemTitleAndDescriptionStaciView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.alignment = .leading
+        stack.spacing = appItemSize == .small ? 0 : 5
         
         return stack
     }()
@@ -48,7 +49,10 @@ final class AppItemStackView: UIView {
     lazy var appItemTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "배타러갈래?"
-        label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        label.font = appItemSize == .small ?
+        UIFont.systemFont(ofSize: 15, weight: .semibold) :
+        UIFont.systemFont(ofSize: 18, weight: .semibold)
+        label.numberOfLines = 2
         label.textColor = .label
         
         return label
@@ -57,7 +61,8 @@ final class AppItemStackView: UIView {
     lazy var appItemDescriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "돈 많이 벌게 해줄게~~"
-        label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        label.numberOfLines = 1
         label.textColor = .label
         
         return label
@@ -71,10 +76,18 @@ final class AppItemStackView: UIView {
         return button
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(appItemSize: AppItemSize) {
+        self.appItemSize = appItemSize
+        super.init(frame: .zero)
         configureStack()
-        configureCostraints()
+        
+        switch appItemSize {
+        case .small:
+            configureSmallCostraints()
+        case .large:
+            configureLargeCostraints()
+        }
+        
     }
     
     required init(coder: NSCoder) {
@@ -93,13 +106,30 @@ final class AppItemStackView: UIView {
         
     }
     
-    private func configureCostraints() {
+    private func configureSmallCostraints() {
         appItemStackView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         
         appIconImageView.snp.makeConstraints {
             $0.width.height.equalTo(35)
+        }
+        
+        downloadButton.snp.makeConstraints {
+            $0.width.equalTo(65)
+            $0.height.equalTo(30)
+        }
+    }
+    
+    private func configureLargeCostraints() {
+        appItemStackView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        appIconImageView.snp.makeConstraints {
+            $0.leading.equalToSuperview()
+            $0.top.bottom.equalToSuperview().inset(5)
+            $0.width.equalTo(appIconImageView.snp.height)
         }
         
         downloadButton.snp.makeConstraints {

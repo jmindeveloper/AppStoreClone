@@ -84,5 +84,7 @@ extension TodayViewController: UICollectionViewDataSource {
 }
 
 extension TodayViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("Asdf")
+    }
 }

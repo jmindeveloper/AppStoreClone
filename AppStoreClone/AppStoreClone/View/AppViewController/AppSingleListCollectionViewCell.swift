@@ -73,7 +73,7 @@ final class AppSingleListCollectionViewCell: UICollectionViewCell {
     }()
     
     // MARK: - Properties
-    private let appItemStackView = AppItemStackView()
+    private let appItemStackView = AppItemStackView(appItemSize: .small)
     
     // MARK: - LifeCycle
     override init(frame: CGRect) {

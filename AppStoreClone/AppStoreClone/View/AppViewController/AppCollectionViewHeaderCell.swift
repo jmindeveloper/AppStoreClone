@@ -64,7 +64,7 @@ final class AppCollectionViewHeaderCell: UICollectionViewCell {
         return label
     }()
     
-    private let appItemStackView = AppItemStackView()
+    private let appItemStackView = AppItemStackView(appItemSize: .small)
     private let divider = Divider()
     
     // MARK: - Properties

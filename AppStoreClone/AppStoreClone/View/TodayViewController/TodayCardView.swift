@@ -9,7 +9,8 @@ import UIKit
 
 final class TodayCardView: UIView {
     
-    let cardViewType: CardViewType
+    var cardViewType: CardViewType?
+    private var appCollection: [AppModel]?
     
     private let backgroundImageView: UIImageView = {
         let imageView = UIImageView()
@@ -41,6 +42,7 @@ final class TodayCardView: UIView {
     
     private let appCollectionTableView: UITableView = {
         let tableView = UITableView()
+        tableView.register(TodayCardAppCollectionTableViewCell.self, forCellReuseIdentifier: TodayCardAppCollectionTableViewCell.identifier)
         
         return tableView
     }()
@@ -63,9 +65,14 @@ final class TodayCardView: UIView {
         self.cardViewType = type
         super.init(frame: .zero)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        appCollectionTableView.rowHeight = (appCollectionTableView.frame.height - 15) / 4
     }
     
     // MARK: - Method
@@ -77,14 +84,16 @@ final class TodayCardView: UIView {
         })
     }
     
-    func configureLayout(with cardModel: TodayCardView) {
-        let cardViewType = cardModel.cardViewType
+//    func configureLayout(with cardModel: TodayCardView) {
+    func configureLayout(with cardViewType: CardViewType) {
+//        let cardViewType = cardModel.cardViewType
         switch cardViewType {
         case .appOfTheDay(let backgroundImage, let app):
             configureAppOfTheDayLayout(image: backgroundImage, app: app)
             configureTextColor()
         case .appCollection(let apps, let title, let subtitle):
             configureAppCollectionLayout(apps: apps, title: title, subtitle: subtitle)
+            appCollection = apps
         case .appArticle(let backgroundImage, let title, let subtitle, let app):
             configureAppArticleLayout(image: backgroundImage, title: title, subtitle: subtitle, app: app)
             configureTextColor()
@@ -96,7 +105,6 @@ final class TodayCardView: UIView {
         [appIconView, titleLabel, appTitleLabel, categoryLabel].forEach {
             backgroundImageView.addSubview($0)
         }
-        
         backgroundImageView.image = backgroundImage
         appIconView.image = app.iconImage
         appTitleLabel.text = app.appName
@@ -133,6 +141,30 @@ final class TodayCardView: UIView {
     
     private func configureAppCollectionLayout(apps : [AppModel], title: String, subtitle: String) {
         appCollectionTableView.dataSource = self
+        appCollectionTableView.separatorStyle = .none
+        subtitleLabel.text = subtitle
+        titleLabel.text = title
+        titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        self.backgroundColor = UIColor(named: "SingleListCellColor")
+        appCollectionTableView.backgroundColor = UIColor(named: "SingleListCellColor")
+        
+        [subtitleLabel, titleLabel, appCollectionTableView].forEach {
+            addSubview($0)
+        }
+        
+        subtitleLabel.snp.makeConstraints {
+            $0.top.leading.equalToSuperview().inset(20)
+        }
+        
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(subtitleLabel.snp.bottom).offset(2)
+            $0.leading.equalTo(subtitleLabel.snp.leading)
+        }
+        
+        appCollectionTableView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(10)
+            $0.leading.bottom.trailing.equalToSuperview()
+        }
     }
     
     private func configureAppArticleLayout(image backgroundImage: UIImage, title: String , subtitle: String, app: AppModel) {
@@ -178,10 +210,18 @@ final class TodayCardView: UIView {
 
 extension TodayCardView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 4
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TodayCardAppCollectionTableViewCell.identifier, for: indexPath) as? TodayCardAppCollectionTableViewCell else { return UITableViewCell() }
+        cell.backgroundColor = UIColor(named: "SingleListCellColor")
+        cell.selectionStyle = .none
+        
+        guard let appModel = appCollection?[indexPath.item] else { return UITableViewCell() }
+
+        cell.configure(with: appModel, index: indexPath.item)
+        
+        return cell
     }
 }
