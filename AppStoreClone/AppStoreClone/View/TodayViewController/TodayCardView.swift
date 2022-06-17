@@ -12,7 +12,7 @@ final class TodayCardView: UIView {
     var cardViewType: CardViewType?
     private var appCollection: [AppModel]?
     
-    private let backgroundImageView: UIImageView = {
+    private lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
@@ -20,7 +20,7 @@ final class TodayCardView: UIView {
         return imageView
     }()
     
-    private let appIconView: UIImageView = {
+    private lazy var appIconView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 15
         imageView.layer.masksToBounds = true
@@ -28,39 +28,40 @@ final class TodayCardView: UIView {
         return imageView
     }()
     
-    private let titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         
         return label
     }()
     
-    private let subtitleLabel: UILabel = {
+    private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         
         return label
     }()
     
-    private let appCollectionTableView: UITableView = {
+    private lazy var appCollectionTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(TodayCardAppCollectionTableViewCell.self, forCellReuseIdentifier: TodayCardAppCollectionTableViewCell.identifier)
         
         return tableView
     }()
     
-    private let appTitleLabel: UILabel = {
+    private lazy var appTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 19, weight: .semibold)
         
         return label
     }()
     
-    private let categoryLabel: UILabel = {
+    private lazy var categoryLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15)
         
         return label
     }()
     
+    // MARK: - LifeCycle
     init(type: CardViewType) {
         self.cardViewType = type
         super.init(frame: .zero)
@@ -84,9 +85,7 @@ final class TodayCardView: UIView {
         })
     }
     
-//    func configureLayout(with cardModel: TodayCardView) {
     func configureLayout(with cardViewType: CardViewType) {
-//        let cardViewType = cardModel.cardViewType
         switch cardViewType {
         case .appOfTheDay(let backgroundImage, let app):
             configureAppOfTheDayLayout(image: backgroundImage, app: app)
@@ -141,6 +140,7 @@ final class TodayCardView: UIView {
     
     private func configureAppCollectionLayout(apps : [AppModel], title: String, subtitle: String) {
         appCollectionTableView.dataSource = self
+        appCollectionTableView.isUserInteractionEnabled = false
         appCollectionTableView.separatorStyle = .none
         subtitleLabel.text = subtitle
         titleLabel.text = title

@@ -21,6 +21,13 @@ final class TodayViewController: UIViewController {
     // MARK: - Properties
     let viewModel = TodayViewModel()
     
+    let statusBarBlurView: UIVisualEffectView = {
+        let blurView = UIBlurEffect(style: .regular)
+        let view = UIVisualEffectView(effect: blurView)
+        
+        return view
+    }()
+    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,14 +37,51 @@ final class TodayViewController: UIViewController {
         collectionView.collectionViewLayout = layout()
         collectionView.dataSource = self
         collectionView.delegate = self
-        
+        print(collectionView.contentOffset)
         configureCostraints()
+        configureStatusBar()
+        statusBarBlurView.alpha = 0
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
     }
     
     // MARK: - Method
     private func configureCostraints() {
         collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+    }
+    
+    private func configureStatusBar() {
+        var statusBarManager: UIStatusBarManager?
+        
+        if #available(iOS 15.0, *) {
+            let window = UIApplication.shared.connectedScenes
+                .map { $0 as? UIWindowScene }
+                .compactMap { $0 }
+                .first?.windows.first
+            statusBarManager = window?.windowScene?.statusBarManager
+        } else {
+            let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+            statusBarManager = window?.windowScene?.statusBarManager
+        }
+        
+        statusBarBlurView.frame = statusBarManager?.statusBarFrame ?? CGRect.zero
+        
+        self.view.addSubview(statusBarBlurView)
+    }
+    
+    private func statusBarBlurViewHidden(_ isHidden: Bool) {
+        
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) { [weak self] in
+            if isHidden {
+                self?.statusBarBlurView.alpha = 0
+            } else {
+                self?.statusBarBlurView.alpha = 1
+            }
         }
     }
     
@@ -85,6 +129,20 @@ extension TodayViewController: UICollectionViewDataSource {
 
 extension TodayViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Asdf")
+        
+    }
+}
+
+extension TodayViewController: UIScrollViewDelegate {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        print(scrollView.contentOffset.y + safeAreaInsets.top)
+        statusBarBlurViewHidden(false)
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y + safeAreaInsets.top == 0 {
+            print(scrollView.contentOffset.y + safeAreaInsets.top)
+            statusBarBlurViewHidden(true)
+        }
     }
 }
