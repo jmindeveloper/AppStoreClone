@@ -50,7 +50,7 @@ final class TodayViewController: UIViewController {
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1.1))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-        group.contentInsets = .init(top: 0, leading: margine, bottom: 0, trailing: margine)
+        group.contentInsets = .init(top: 0, leading: margine, bottom: 30, trailing: margine)
         
         let section = NSCollectionLayoutSection(group: group)
         
@@ -74,7 +74,8 @@ extension TodayViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TodayCardCell.identifier, for: indexPath) as? TodayCardCell else { return UICollectionViewCell() }
         
         let cardModel = viewModel.cards[indexPath.item]
-        let cellView = TodayCardView(type: .appOfTheDay(backgroundImage: cardModel.backgroundImage!, app: cardModel.app!))
+        guard let cardType = cardModel.viewType else { return UICollectionViewCell() }
+        let cellView = TodayCardView(type: cardType)
         
         cell.configure(with: cellView)
         

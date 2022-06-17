@@ -29,9 +29,6 @@ final class TodayCardView: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
-        label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 50, weight: .bold)
         
         return label
     }()
@@ -105,6 +102,8 @@ final class TodayCardView: UIView {
         appTitleLabel.text = app.appName
         titleLabel.text = "APP\nOFF THE\nDAY"
         categoryLabel.text = app.category
+        titleLabel.numberOfLines = 0
+        titleLabel.font = UIFont.systemFont(ofSize: 50, weight: .bold)
         
         backgroundImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -137,7 +136,42 @@ final class TodayCardView: UIView {
     }
     
     private func configureAppArticleLayout(image backgroundImage: UIImage, title: String , subtitle: String, app: AppModel) {
+        addSubview(backgroundImageView)
+        backgroundImageView.image = backgroundImage
+        subtitleLabel.text = subtitle
+        titleLabel.text = title
+        titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        appTitleLabel.text = app.appName
+        categoryLabel.text = app.category
         
+        
+        [subtitleLabel, titleLabel, appTitleLabel, categoryLabel].forEach {
+            backgroundImageView.addSubview($0)
+        }
+        
+        backgroundImageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.size.equalToSuperview()
+        }
+        
+        subtitleLabel.snp.makeConstraints {
+            $0.top.leading.equalToSuperview().inset(20)
+        }
+        
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(subtitleLabel.snp.bottom).offset(2)
+            $0.leading.equalTo(subtitleLabel.snp.leading)
+        }
+        
+        categoryLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(20)
+            $0.bottom.equalToSuperview().offset(-20)
+        }
+        
+        appTitleLabel.snp.makeConstraints {
+            $0.leading.equalTo(categoryLabel)
+            $0.bottom.equalTo(categoryLabel.snp.top).offset(-1)
+        }
     }
     
 }
