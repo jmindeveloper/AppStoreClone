@@ -14,6 +14,7 @@ final class TodayViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(TodayCardCell.self, forCellWithReuseIdentifier: TodayCardCell.identifier)
+        collectionView.register(TodayHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TodayHeaderView.identifier)
         
         return collectionView
     }()
@@ -101,10 +102,20 @@ final class TodayViewController: UIViewController {
         return section
     }
     
+    private func creatHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+        let size = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9), heightDimension: .absolute(80))
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: size, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        sectionHeader.contentInsets = .init(top: 5, leading: 0, bottom: 5, trailing: 0)
+        
+        return sectionHeader
+    }
+    
     private func layout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { [weak self] _, _ -> NSCollectionLayoutSection? in
             guard let self = self else { return nil }
-            return self.creatCardCellLayout()
+            let section = self.creatCardCellLayout()
+            section.boundarySupplementaryItems = [self.creatHeader()]
+            return section
         }
     }
 }
@@ -124,6 +135,16 @@ extension TodayViewController: UICollectionViewDataSource {
         cell.configure(with: cellView)
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader {
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TodayHeaderView.identifier, for: indexPath) as? TodayHeaderView else { return UICollectionReusableView() }
+            
+            return headerView
+        } else {
+            return UICollectionReusableView()
+        }
     }
 }
 

@@ -33,6 +33,8 @@
 		0E73D9982851D48E009E0B82 /* SectionHeaderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E73D9972851D48E009E0B82 /* SectionHeaderModel.swift */; };
 		0E73D99A2851DBBA009E0B82 /* AppDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E73D9992851DBBA009E0B82 /* AppDetailViewController.swift */; };
 		0EA4FC7D285C57F8006FCB2B /* TodayCardAppCollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA4FC7C285C57F8006FCB2B /* TodayCardAppCollectionTableViewCell.swift */; };
+		0EA4FC7F285C81D4006FCB2B /* TodayHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA4FC7E285C81D4006FCB2B /* TodayHeaderView.swift */; };
+		0EA4FC81285C820D006FCB2B /* DateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA4FC80285C820D006FCB2B /* DateViewModel.swift */; };
 		0ED3DF922859C10A000A8B34 /* TodayCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ED3DF912859C10A000A8B34 /* TodayCardModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +67,8 @@
 		0E73D9972851D48E009E0B82 /* SectionHeaderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderModel.swift; sourceTree = "<group>"; };
 		0E73D9992851DBBA009E0B82 /* AppDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDetailViewController.swift; sourceTree = "<group>"; };
 		0EA4FC7C285C57F8006FCB2B /* TodayCardAppCollectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayCardAppCollectionTableViewCell.swift; sourceTree = "<group>"; };
+		0EA4FC7E285C81D4006FCB2B /* TodayHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayHeaderView.swift; sourceTree = "<group>"; };
+		0EA4FC80285C820D006FCB2B /* DateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateViewModel.swift; sourceTree = "<group>"; };
 		0ED3DF912859C10A000A8B34 /* TodayCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayCardModel.swift; sourceTree = "<group>"; };
 		331DE2DE9A7D04E39AA32CC8 /* Pods_AppStoreClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppStoreClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		423CF316F8DC677A316C24E6 /* Pods-AppStoreClone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppStoreClone.release.xcconfig"; path = "Target Support Files/Pods-AppStoreClone/Pods-AppStoreClone.release.xcconfig"; sourceTree = "<group>"; };
@@ -194,6 +198,7 @@
 			children = (
 				0E73D99528519BCC009E0B82 /* AppRankingViewModel.swift */,
 				0E1EFE59285B12C5009177A8 /* TodayViewModel.swift */,
+				0EA4FC80285C820D006FCB2B /* DateViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -204,6 +209,7 @@
 				0E1EFE5B285B1336009177A8 /* TodayCardCell.swift */,
 				0E1EFE5D285B47B7009177A8 /* TodayCardView.swift */,
 				0EA4FC7C285C57F8006FCB2B /* TodayCardAppCollectionTableViewCell.swift */,
+				0EA4FC7E285C81D4006FCB2B /* TodayHeaderView.swift */,
 			);
 			path = TodayViewController;
 			sourceTree = "<group>";
@@ -369,6 +375,7 @@
 				0E6FDCA9284F09DB0054E07C /* TodayViewController.swift in Sources */,
 				0E1EFE5E285B47B7009177A8 /* TodayCardView.swift in Sources */,
 				0E6FDCB9284F1CF40054E07C /* extension.swift in Sources */,
+				0EA4FC81285C820D006FCB2B /* DateViewModel.swift in Sources */,
 				0E5FCC68285039AA00A124FB /* AppCollectionViewHeaderCell.swift in Sources */,
 				0E6FDCB0284F0CCA0054E07C /* APICaller.swift in Sources */,
 				0E3A12CC284F074600B561F3 /* AppDelegate.swift in Sources */,
@@ -376,6 +383,7 @@
 				0E6FDCB4284F10FD0054E07C /* AppSingleListCollectionViewCell.swift in Sources */,
 				0E73D99A2851DBBA009E0B82 /* AppDetailViewController.swift in Sources */,
 				0E6FDCA7284F091E0054E07C /* BaseTabBarController.swift in Sources */,
+				0EA4FC7F285C81D4006FCB2B /* TodayHeaderView.swift in Sources */,
 				0E46E89F2850E7930078CEF9 /* AppCollectionViewHeader.swift in Sources */,
 				0E6FDCB6284F11DD0054E07C /* AppListCollectionViewCell.swift in Sources */,
 				0EA4FC7D285C57F8006FCB2B /* TodayCardAppCollectionTableViewCell.swift in Sources */,
