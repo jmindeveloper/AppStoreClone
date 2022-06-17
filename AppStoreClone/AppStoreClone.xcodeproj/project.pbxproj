@@ -35,6 +35,7 @@
 		0EA4FC7D285C57F8006FCB2B /* TodayCardAppCollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA4FC7C285C57F8006FCB2B /* TodayCardAppCollectionTableViewCell.swift */; };
 		0EA4FC7F285C81D4006FCB2B /* TodayHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA4FC7E285C81D4006FCB2B /* TodayHeaderView.swift */; };
 		0EA4FC81285C820D006FCB2B /* DateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA4FC80285C820D006FCB2B /* DateViewModel.swift */; };
+		0EA4FC83285C8D88006FCB2B /* TodayCardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA4FC82285C8D88006FCB2B /* TodayCardDetailViewController.swift */; };
 		0ED3DF922859C10A000A8B34 /* TodayCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ED3DF912859C10A000A8B34 /* TodayCardModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +70,7 @@
 		0EA4FC7C285C57F8006FCB2B /* TodayCardAppCollectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayCardAppCollectionTableViewCell.swift; sourceTree = "<group>"; };
 		0EA4FC7E285C81D4006FCB2B /* TodayHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayHeaderView.swift; sourceTree = "<group>"; };
 		0EA4FC80285C820D006FCB2B /* DateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateViewModel.swift; sourceTree = "<group>"; };
+		0EA4FC82285C8D88006FCB2B /* TodayCardDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayCardDetailViewController.swift; sourceTree = "<group>"; };
 		0ED3DF912859C10A000A8B34 /* TodayCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayCardModel.swift; sourceTree = "<group>"; };
 		331DE2DE9A7D04E39AA32CC8 /* Pods_AppStoreClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppStoreClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		423CF316F8DC677A316C24E6 /* Pods-AppStoreClone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppStoreClone.release.xcconfig"; path = "Target Support Files/Pods-AppStoreClone/Pods-AppStoreClone.release.xcconfig"; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				0E6FDCA8284F09DB0054E07C /* TodayViewController.swift */,
+				0EA4FC82285C8D88006FCB2B /* TodayCardDetailViewController.swift */,
 			);
 			path = Today;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 				0E46E89C2850D7F00078CEF9 /* AppItemStackView.swift in Sources */,
 				0E1EFE5A285B12C5009177A8 /* TodayViewModel.swift in Sources */,
 				0E3D026628574D6E00EDEA17 /* Cosntant.swift in Sources */,
+				0EA4FC83285C8D88006FCB2B /* TodayCardDetailViewController.swift in Sources */,
 				0E6FDCA9284F09DB0054E07C /* TodayViewController.swift in Sources */,
 				0E1EFE5E285B47B7009177A8 /* TodayCardView.swift in Sources */,
 				0E6FDCB9284F1CF40054E07C /* extension.swift in Sources */,

@@ -43,7 +43,7 @@ final class TodayCardCell: UICollectionViewCell {
               let type = cellview.cardViewType
         else { return }
         
-        cellView.configureLayout(with: type)
+        cellView.configureLayout(with: type, mode: .card)
         
         self.contentView.addSubview(cellView)
         cellView.snp.makeConstraints {

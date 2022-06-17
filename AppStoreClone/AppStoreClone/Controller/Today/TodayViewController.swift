@@ -38,7 +38,6 @@ final class TodayViewController: UIViewController {
         collectionView.collectionViewLayout = layout()
         collectionView.dataSource = self
         collectionView.delegate = self
-        print(collectionView.contentOffset)
         configureCostraints()
         configureStatusBar()
         statusBarBlurView.alpha = 0
@@ -150,19 +149,26 @@ extension TodayViewController: UICollectionViewDataSource {
 
 extension TodayViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detailVC = TodayCardDetailViewController()
         
+        let cardModel = viewModel.cards[indexPath.item]
+        guard let cardType = cardModel.viewType else { return }
+        let cardView = TodayCardView(type: cardType)
+        
+        detailVC.configure(with: cardView)
+        detailVC.modalPresentationStyle = .custom
+        
+        self.present(detailVC, animated: true)
     }
 }
 
 extension TodayViewController: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        print(scrollView.contentOffset.y + safeAreaInsets.top)
         statusBarBlurViewHidden(false)
     }
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y + safeAreaInsets.top == 0 {
-            print(scrollView.contentOffset.y + safeAreaInsets.top)
             statusBarBlurViewHidden(true)
         }
     }

@@ -10,6 +10,8 @@ import UIKit
 final class TodayCardView: UIView {
     
     var cardViewType: CardViewType?
+    var cardViewMode: CardViewMode = .card
+    
     private var appCollection: [AppModel]?
     
     private lazy var backgroundImageView: UIImageView = {
@@ -85,7 +87,8 @@ final class TodayCardView: UIView {
         })
     }
     
-    func configureLayout(with cardViewType: CardViewType) {
+    func configureLayout(with cardViewType: CardViewType, mode: CardViewMode) {
+        cardViewMode = mode
         switch cardViewType {
         case .appOfTheDay(let backgroundImage, let app):
             configureAppOfTheDayLayout(image: backgroundImage, app: app)
@@ -113,13 +116,20 @@ final class TodayCardView: UIView {
         titleLabel.font = UIFont.systemFont(ofSize: 50, weight: .bold)
         
         backgroundImageView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.size.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
         
-        appIconView.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().inset(20)
-            $0.size.equalTo(100)
+        if cardViewMode == .card {
+            appIconView.snp.makeConstraints {
+                $0.top.leading.equalToSuperview().inset(20)
+                $0.size.equalTo(100)
+            }
+        } else {
+            appIconView.snp.makeConstraints {
+                $0.leading.equalToSuperview().offset(20)
+                $0.top.equalTo(safeAreaLayoutGuide).offset(10)
+                $0.size.equalTo(100)
+            }
         }
         
         titleLabel.snp.makeConstraints {
@@ -145,15 +155,26 @@ final class TodayCardView: UIView {
         subtitleLabel.text = subtitle
         titleLabel.text = title
         titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        self.backgroundColor = UIColor(named: "SingleListCellColor")
-        appCollectionTableView.backgroundColor = UIColor(named: "SingleListCellColor")
+        self.backgroundColor = cardViewMode == .card ?
+        UIColor(named: "SingleListCellColor") :
+        .systemBackground
+        appCollectionTableView.backgroundColor = cardViewMode == .card ?
+        UIColor(named: "SingleListCellColor") :
+        .systemBackground
         
         [subtitleLabel, titleLabel, appCollectionTableView].forEach {
             addSubview($0)
         }
         
-        subtitleLabel.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().inset(20)
+        if cardViewMode == .card {
+            subtitleLabel.snp.makeConstraints {
+                $0.top.leading.equalToSuperview().inset(20)
+            }
+        } else {
+            subtitleLabel.snp.makeConstraints {
+                $0.top.equalTo(safeAreaLayoutGuide).offset(10)
+                $0.leading.equalToSuperview().offset(20)
+            }
         }
         
         titleLabel.snp.makeConstraints {
@@ -182,8 +203,18 @@ final class TodayCardView: UIView {
         }
         
         backgroundImageView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.size.equalToSuperview()
+            $0.edges.equalToSuperview()
+        }
+        
+        if cardViewMode == .card {
+            subtitleLabel.snp.makeConstraints {
+                $0.top.leading.equalToSuperview().inset(20)
+            }
+        } else {
+            subtitleLabel.snp.makeConstraints {
+                $0.leading.equalToSuperview().offset(20)
+                $0.top.equalTo(safeAreaLayoutGuide).offset(10)
+            }
         }
         
         subtitleLabel.snp.makeConstraints {
@@ -215,7 +246,9 @@ extension TodayCardView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TodayCardAppCollectionTableViewCell.identifier, for: indexPath) as? TodayCardAppCollectionTableViewCell else { return UITableViewCell() }
-        cell.backgroundColor = UIColor(named: "SingleListCellColor")
+        cell.backgroundColor = cardViewMode == .card ?
+        UIColor(named: "SingleListCellColor") :
+        .systemBackground
         cell.selectionStyle = .none
         
         guard let appModel = appCollection?[indexPath.item] else { return UITableViewCell() }
