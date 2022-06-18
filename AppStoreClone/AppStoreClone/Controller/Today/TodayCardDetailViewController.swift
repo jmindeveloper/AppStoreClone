@@ -96,9 +96,14 @@ class TodayCardDetailViewController: UIViewController {
         view.addSubview(dismissButton)
         scrollView.addSubview(scrollContentView)
         scrollContentView.addSubview(descriptionLabel)
-        configureConstraints()
         
+        scrollView.delegate = self
         dismissButton.addTarget(self, action: #selector(dismissAction(_:)), for: .touchUpInside)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        configureConstraints()
     }
     
     // MARK: - Method
@@ -138,13 +143,44 @@ class TodayCardDetailViewController: UIViewController {
         descriptionLabel.snp.makeConstraints {
             $0.width.equalToSuperview().multipliedBy(0.9)
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(todayCardView.snp.bottom).offset(5)
-            $0.bottom.equalToSuperview().offset(-5)
+            $0.top.equalTo(todayCardView.snp.bottom).offset(15)
+            $0.bottom.equalToSuperview().offset(-50)
         }
+        
+        scrollView.scrollIndicatorInsets = UIEdgeInsets(top: todayCardView.frame.height - safeAreaInsets.top, left: 0, bottom: 0, right: 0)
         
     }
         
     @objc private func dismissAction(_ sender: UIButton) {
         self.dismiss(animated: true)
+    }
+}
+
+extension TodayCardDetailViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let todayCardView = todayCardView else { return }
+        if scrollView.contentOffset.y < 0 && !scrollView.isTracking {
+            todayCardView.snp.remakeConstraints {
+                $0.top.equalTo(view.snp.top)
+                $0.centerX.equalToSuperview()
+                $0.width.equalToSuperview()
+                $0.height.equalTo(view.snp.width).multipliedBy(1.1)
+            }
+        } else if scrollView.contentOffset.y < 0 && scrollView.isTracking {
+            scrollView.contentOffset = .zero
+            todayCardView.snp.remakeConstraints {
+                $0.top.equalTo(view.snp.top)
+                $0.centerX.equalToSuperview()
+                $0.width.equalToSuperview()
+                $0.height.equalTo(view.snp.width).multipliedBy(1.1)
+            }
+        } else {
+            todayCardView.snp.remakeConstraints {
+                $0.top.equalToSuperview()
+                $0.centerX.equalToSuperview()
+                $0.width.equalToSuperview()
+                $0.height.equalTo(view.snp.width).multipliedBy(1.1)
+            }
+        }
     }
 }
